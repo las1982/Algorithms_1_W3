@@ -52,13 +52,16 @@ public class FastCollinearPoints {
         Arrays.sort(collinearPoints);
         Point min = collinearPoints[0];
         Point max = collinearPoints[collinearPoints.length - 1];
+        LineSegment newLineSegment = new LineSegment(min, max);
+        for (LineSegment ls : lineSegments){
+            if (ls.equals(newLineSegment)) return;
+        }
         LineSegment[] tempLineSegments = new LineSegment[numberOfSegments() + 1];
         for (int i = 0; i < numberOfSegments(); i++) {
             tempLineSegments[i] = lineSegments[i];
         }
-        tempLineSegments[numberOfSegments()] = new LineSegment(min, max);
+        tempLineSegments[numberOfSegments()] = newLineSegment;
         lineSegments = tempLineSegments;
-
     }
 
     public int numberOfSegments() {
