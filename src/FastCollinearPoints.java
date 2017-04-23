@@ -14,34 +14,35 @@ public class FastCollinearPoints {
             }
         }
         for (int i = 0; i < points.length; i++) {
+            Arrays.sort(points);
             Point p0 = points[i];
             Arrays.sort(points, p0.slopeOrder());
 //            System.out.println(Arrays.toString(points));
-            int nColPoints = 1;
             int start = 0;
             int end = 0;
-            for (int j = 1; j < points.length; j++) {
-                if (p0.slopeTo(points[start]) == p0.slopeTo(points[j])) {
-                    nColPoints++;
-                }
-                else if (nColPoints < 3) {
+            for (int j = 0; j < points.length - 2; j++) {
+                Point p1 = points[j];
+                Point p2 = points[j + 1];
+                Point p3 = points[j + 2];
+                if (p0.slopeTo(p1) == p0.slopeTo(p2) && p0.slopeTo(p2) == p0.slopeTo(p3)) {
                     start = j;
-                    end = j;
-                    nColPoints = 1;
-                }
-                else if (nColPoints >= 3) {
-                    end = j - 1;
-                    Point[] collinearPoints = new Point[end - start + 2];
-//                    System.out.println(start + " " + end + " " + collinearPoints.length);
-                    collinearPoints[0] = p0;
-                    int l = 1;
-                    for (int k = start; k <= end; k++) {
-                        collinearPoints[l++] = points[k];
+                    end = j + 2;
+                    for (int k = j + 3; k < points.length; k++) {
+                        if (p0.slopeTo(p3) == p0.slopeTo(points[k])) {
+                            end = k;
+                            continue;
+                        } else {
+                            Point[] collinearPoints = new Point[end - start + 2];
+                            collinearPoints[0] = p0;
+                            int l = 1;
+                            for (int n = start; n <= end; n++) {
+                                collinearPoints[l++] = points[n];
+                            }
+                            createLineSegments(collinearPoints);
+                            j = end;
+                            break;
+                        }
                     }
-                    createLineSegments(collinearPoints);
-                    start = j;
-                    end = j;
-                    nColPoints = 1;
                 }
             }
         }
@@ -57,6 +58,7 @@ public class FastCollinearPoints {
         }
         tempLineSegments[numberOfSegments()] = new LineSegment(min, max);
         lineSegments = tempLineSegments;
+
     }
 
     public int numberOfSegments() {
