@@ -26,24 +26,18 @@ public class BruteCollinearPoints {
     }
 
     private void createLineSegments(Point[] collinearPoints) {
-//        print before sort
-//        for (Point pt : collinearPoints){
-//            System.out.print(pt.toString());
-//        }
-//        System.out.println();
         Arrays.sort(collinearPoints);
-//        print after sort
-//        for (Point pt : collinearPoints){
-//            System.out.print(pt.toString());
-//        }
-//        System.out.println();
         Point min = collinearPoints[0];
         Point max = collinearPoints[collinearPoints.length - 1];
+        LineSegment newLineSegment = new LineSegment(min, max);
+        for (LineSegment ls : lineSegments){
+            if (ls.toString().equals(newLineSegment.toString())) return;
+        }
         LineSegment[] tempLineSegments = new LineSegment[numberOfSegments() + 1];
         for (int i = 0; i < numberOfSegments(); i++) {
             tempLineSegments[i] = lineSegments[i];
         }
-        tempLineSegments[numberOfSegments()] = new LineSegment(min, max);
+        tempLineSegments[numberOfSegments()] = newLineSegment;
         lineSegments = tempLineSegments;
     }
 

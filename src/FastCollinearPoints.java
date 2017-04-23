@@ -54,7 +54,7 @@ public class FastCollinearPoints {
         Point max = collinearPoints[collinearPoints.length - 1];
         LineSegment newLineSegment = new LineSegment(min, max);
         for (LineSegment ls : lineSegments){
-            if (ls.equals(newLineSegment)) return;
+            if (ls.toString().equals(newLineSegment.toString())) return;
         }
         LineSegment[] tempLineSegments = new LineSegment[numberOfSegments() + 1];
         for (int i = 0; i < numberOfSegments(); i++) {
