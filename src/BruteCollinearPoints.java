@@ -1,7 +1,8 @@
 import java.util.Arrays;
 
 public class BruteCollinearPoints {
-    private LineSegment[] lineSegments = new LineSegment[0];
+    private LineSegment[] lineSegments;
+    private Point[][] pts = new Point[0][];
 
     public BruteCollinearPoints(Point[] points) {
         if (points == null) throw new java.lang.NullPointerException();
@@ -17,32 +18,35 @@ public class BruteCollinearPoints {
                     if (points[p].slopeTo(points[q]) != points[p].slopeTo(points[r])) continue;
                     for (int s = r + 1; s < points.length; s++) {
                         if (points[p].slopeTo(points[q]) != points[p].slopeTo(points[s])) continue;
-//                        System.out.println(points[p].toString() + points[q].toString() + points[r].toString() + points[s].toString());
                         createLineSegments(new Point[]{points[p], points[q], points[r], points[s]});
                     }
                 }
             }
         }
+        lineSegments = new LineSegment[pts.length];
+        for (int i = 0; i < pts.length; i++){
+            lineSegments[i] = new LineSegment(pts[i][0], pts[i][1]);
+        }
+
     }
 
     private void createLineSegments(Point[] collinearPoints) {
         Arrays.sort(collinearPoints);
         Point min = collinearPoints[0];
         Point max = collinearPoints[collinearPoints.length - 1];
-        LineSegment newLineSegment = new LineSegment(min, max);
-        for (LineSegment ls : lineSegments){
-            if (ls.toString().equals(newLineSegment.toString())) return;
+        for (Point[] pt : pts){
+            if (pt[0].compareTo(min) == 0 && pt[1].compareTo(max) == 0) return;
         }
-        LineSegment[] tempLineSegments = new LineSegment[numberOfSegments() + 1];
-        for (int i = 0; i < numberOfSegments(); i++) {
-            tempLineSegments[i] = lineSegments[i];
+        Point[][] ptsTmp = new Point[pts.length + 1][];
+        ptsTmp[ptsTmp.length - 1] = new Point[] {min, max};
+        for (int i = 0; i < pts.length; i++){
+            ptsTmp[i] = pts[i];
         }
-        tempLineSegments[numberOfSegments()] = newLineSegment;
-        lineSegments = tempLineSegments;
+        pts = ptsTmp;
     }
 
     public int numberOfSegments() {
-        return lineSegments.length;
+        return segments().length;
     }
 
     public LineSegment[] segments() {

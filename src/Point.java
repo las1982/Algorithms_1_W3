@@ -60,8 +60,13 @@ public class Point implements Comparable<Point> {
         return "(" + x + ", " + y + ")";
     }
     public static void main(String[] args){
-        Point p = new Point(66, 230);
-        Point q = new Point(66, 230);
-        System.out.println(p.slopeTo(q));
+        Point p0 = new Point(100, 230);
+        Point p1 = new Point(25, 30);
+        Point p2 = new Point(100, 230);
+        Point p3 = new Point(25, 30);
+        LineSegment ls0 = new LineSegment(p0, p1);
+        LineSegment ls1 = new LineSegment(p0, p1);
+
+        System.out.println(ls0.equals(ls1));
     }
 }
