@@ -26,10 +26,11 @@ public class Point implements Comparable<Point> {
         int xx = that.x - this.x;
         int yy = that.y - this.y;
         if (xx == 0) {
-            if (yy >= 0) return Double.POSITIVE_INFINITY;
-            if (yy < 0) return Double.NEGATIVE_INFINITY;
+            if (yy == 0) return Double.NEGATIVE_INFINITY;
+            else return Double.POSITIVE_INFINITY;
         }
-        return (double) yy / xx;
+        else if (yy == 0) return (double) +0;
+        else return (double) yy / xx;
     }
 
     public int compareTo(Point that) {
@@ -57,5 +58,10 @@ public class Point implements Comparable<Point> {
     public String toString() {
         /* DO NOT MODIFY */
         return "(" + x + ", " + y + ")";
+    }
+    public static void main(String[] args){
+        Point p = new Point(66, 230);
+        Point q = new Point(66, 230);
+        System.out.println(p.slopeTo(q));
     }
 }

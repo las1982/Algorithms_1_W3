@@ -8,7 +8,7 @@ public class BruteCollinearPoints {
         for (int i = 0; i < points.length - 1; i++) {
             for (int j = i + 1; j < points.length; j++) {
                 if (points[i] == null) throw new java.lang.NullPointerException();
-                else if (points[i] == points[j]) throw new java.lang.NullPointerException();
+                else if (points[i].compareTo(points[j]) == 0) throw new java.lang.IllegalArgumentException();
             }
         }
         for (int p = 0; p < points.length; p++) {

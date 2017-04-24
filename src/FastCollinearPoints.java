@@ -8,8 +8,8 @@ public class FastCollinearPoints {
         for (int i = 0; i < points.length - 1; i++) {
             for (int j = i + 1; j < points.length; j++) {
                 if (points[i] == null) throw new java.lang.NullPointerException("there is null");
-                else if (points[i] == points[j]) {
-                    throw new java.lang.NullPointerException("same elements");
+                else if (points[i].compareTo(points[j]) == 0) {
+                    throw new java.lang.IllegalArgumentException("same elements");
                 }
             }
         }
