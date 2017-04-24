@@ -27,7 +27,6 @@ public class BruteCollinearPoints {
         for (int i = 0; i < pts.length; i++){
             lineSegments[i] = new LineSegment(pts[i][0], pts[i][1]);
         }
-
     }
 
     private void createLineSegments(Point[] collinearPoints) {
